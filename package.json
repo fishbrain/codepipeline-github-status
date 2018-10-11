@@ -1,0 +1,54 @@
+{
+  "name": "codepipeline-github-status",
+  "version": "1.0.0",
+  "description": "Report status from CodePipeline to Github",
+  "main": "index.ts",
+  "repository": "git@github.com:fishbrain/codepipeline-github-status.git",
+  "author": "Erik Dalén <erik.gustav.dalen@gmail.com>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "tslint --project . && jest",
+    "lint": "tslint --project .",
+    "deploy": "serverless deploy"
+  },
+  "dependencies": {
+    "@octokit/rest": "^15.13.1",
+    "aws-sdk": "^2.332.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.13",
+    "@types/jest": "^23.3.5",
+    "@types/node": "^10.11.7",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3",
+    "serverless": "^1.32.0",
+    "serverless-plugin-optimize": "^3.1.1-rc.1",
+    "serverless-plugin-typescript": "^1.1.5",
+    "ts-jest": "^23.10.4",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-immutable": "^4.8.0",
+    "tslint-plugin-prettier": "^2.0.0",
+    "typescript": "^3.1.2"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

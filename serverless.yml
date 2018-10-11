@@ -1,0 +1,40 @@
+service:
+  name: codepipeline-github-status
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-plugin-optimize
+
+provider:
+  name: aws
+  memorySize: 128
+  runtime: nodejs8.10
+  region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - 'ssm:GetParametersByPath'
+      Resource:
+        - 'arn:aws:ssm:${self:provider.region}:*:parameter/codepipeline-github-status'
+    - Effect: Allow
+      Action:
+        - 'kms:Decrypt'
+      Resource:
+        - 'arn:aws:kms:${self:provider.region}:*:key/*'
+    - Effect: Allow
+      Action:
+        - 'codepipeline:GetPipelineExecution'
+      Resource:
+        - arn:aws:codepipeline:${self:provider.region}:*:*
+
+functions:
+  main:
+    handler: index.handler
+    reservedConcurrency: 1
+    events:
+      - cloudwatchEvent:
+          event:
+            source:
+              - 'aws.codepipeline'
+            detail-type:
+              - 'CodePipeline Pipeline Execution State Change'
