@@ -2,13 +2,10 @@ import { Handler, Context, Callback } from 'aws-lambda';
 import * as Octokit from '@octokit/rest';
 import * as AWS from 'aws-sdk';
 import { getParameter, fetchParameters } from './ssm';
-import {
-  CodePipelinePiplelineEvent,
-  CodePipelineStageEvent,
-} from './codepipeline';
+import { CodePipelineEvent } from './codepipeline';
 
 export const handler: Handler = async (
-  event: CodePipelinePiplelineEvent | CodePipelineStageEvent,
+  event: CodePipelineEvent,
   _context: Context,
   _callback: Callback | undefined,
 ) => {

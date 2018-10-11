@@ -39,3 +39,4 @@ functions:
             detail-type:
               - 'CodePipeline Pipeline Execution State Change'
               - 'CodePipeline Stage Execution State Change'
+              - 'CodePipeline Action Execution State Change'
