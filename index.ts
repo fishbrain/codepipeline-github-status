@@ -99,5 +99,14 @@ export const handler: Handler = async (
     state,
     owner,
     repo,
+    context: `CodePipeline (${event.detail.pipeline})`,
+    description: `Execution ${
+      event.detail['execution-id']
+    } has ${event.detail.state.toLowerCase()}`,
+    target_url: `https://${
+      event.region
+    }.console.aws.amazon.com/codepipeline/home?region=${event.region}#/view/${
+      event.detail.pipeline
+    }/history`,
   });
 };
