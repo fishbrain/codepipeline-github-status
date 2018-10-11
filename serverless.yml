@@ -38,3 +38,4 @@ functions:
               - 'aws.codepipeline'
             detail-type:
               - 'CodePipeline Pipeline Execution State Change'
+              - 'CodePipeline Stage Execution State Change'

@@ -2,10 +2,13 @@ import { Handler, Context, Callback } from 'aws-lambda';
 import * as Octokit from '@octokit/rest';
 import * as AWS from 'aws-sdk';
 import { getParameter, fetchParameters } from './ssm';
-import { CodePipelinePiplelineEvent } from './codepipeline';
+import {
+  CodePipelinePiplelineEvent,
+  CodePipelineStageEvent,
+} from './codepipeline';
 
 export const handler: Handler = async (
-  event: CodePipelinePiplelineEvent,
+  event: CodePipelinePiplelineEvent | CodePipelineStageEvent,
   _context: Context,
   _callback: Callback | undefined,
 ) => {
@@ -78,21 +81,19 @@ export const handler: Handler = async (
   const repo = matches[2];
 
   const state = ((
-    event: CodePipelinePiplelineEvent,
+    execution: AWS.CodePipeline.PipelineExecution,
   ): 'error' | 'failure' | 'pending' | 'success' => {
-    switch (event.detail.state) {
-      case 'STARTED':
-      case 'RESUMED':
+    switch (execution.status) {
+      case 'InProgress':
         return 'pending';
-      case 'CANCELED':
-      case 'SUPERSEDED':
-        return 'error';
-      case 'FAILED':
+      case 'Failed':
         return 'failure';
-      case 'SUCCEEDED':
+      case 'Succeeded':
         return 'success';
+      default:
+        return 'error';
     }
-  })(event);
+  })(execution.pipelineExecution);
 
   await octokit.repos.createStatus({
     sha,
@@ -100,9 +101,9 @@ export const handler: Handler = async (
     owner,
     repo,
     context: `CodePipeline (${event.detail.pipeline})`,
-    description: `Execution ${
-      event.detail['execution-id']
-    } has ${event.detail.state.toLowerCase()}`,
+    description: `Execution ${event.detail['execution-id']} ${
+      execution.pipelineExecution.status
+    }`,
     target_url: `https://${
       event.region
     }.console.aws.amazon.com/codepipeline/home?region=${event.region}#/view/${
