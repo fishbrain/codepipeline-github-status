@@ -92,15 +92,27 @@ export const handler: Handler = async (
     }
   })(execution.pipelineExecution);
 
+  const description = ((event: CodePipelineEvent): string => {
+    switch (event['detail-type']) {
+      case 'CodePipeline Pipeline Execution State Change':
+        return `${execution.pipelineExecution.status}: Execution ${
+          event.detail['execution-id']
+        }`;
+      case 'CodePipeline Action Execution State Change':
+      case 'CodePipeline Stage Execution State Change':
+        return `${execution.pipelineExecution.status} (${
+          event.detail.stage
+        }): Execution ${event.detail['execution-id']}`;
+    }
+  })(event);
+
   await octokit.repos.createStatus({
     sha,
     state,
     owner,
     repo,
+    description,
     context: `CodePipeline (${event.detail.pipeline})`,
-    description: `Execution ${event.detail['execution-id']} ${
-      execution.pipelineExecution.status
-    }`,
     target_url: `https://${
       event.region
     }.console.aws.amazon.com/codepipeline/home?region=${event.region}#/view/${
