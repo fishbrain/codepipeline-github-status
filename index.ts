@@ -1,8 +1,8 @@
-import { Handler, Context, Callback } from 'aws-lambda';
 import * as Octokit from '@octokit/rest';
+import { Callback, Context, Handler } from 'aws-lambda';
 import * as AWS from 'aws-sdk';
-import { getParameter, fetchParameters } from './ssm';
 import { CodePipelineEvent } from './codepipeline';
+import { fetchParameters, getParameter } from './ssm';
 
 export const handler: Handler = async (
   event: CodePipelineEvent,
@@ -20,15 +20,15 @@ export const handler: Handler = async (
   }
 
   octokit.authenticate({
-    type: 'token',
     token: githubToken,
+    type: 'token',
   });
 
   const codePipeline = new AWS.CodePipeline();
   const execution = await codePipeline
     .getPipelineExecution({
-      pipelineName: event.detail.pipeline,
       pipelineExecutionId: event.detail['execution-id'],
+      pipelineName: event.detail.pipeline,
     })
     .promise();
 
@@ -78,9 +78,9 @@ export const handler: Handler = async (
   const repo = matches[2];
 
   const state = ((
-    execution: AWS.CodePipeline.PipelineExecution,
+    pipelineExecution: AWS.CodePipeline.PipelineExecution,
   ): 'error' | 'failure' | 'pending' | 'success' => {
-    switch (execution.status) {
+    switch (pipelineExecution.status) {
       case 'InProgress':
         return 'pending';
       case 'Failed':
@@ -92,7 +92,7 @@ export const handler: Handler = async (
     }
   })(execution.pipelineExecution);
 
-  const description = ((event: CodePipelineEvent): string => {
+  const description = ((): string => {
     switch (event['detail-type']) {
       case 'CodePipeline Pipeline Execution State Change':
         return `${execution.pipelineExecution.status}: Execution ${
@@ -104,14 +104,14 @@ export const handler: Handler = async (
           event.detail.stage
         }): Execution ${event.detail['execution-id']}`;
     }
-  })(event);
+  })();
 
   await octokit.repos.createStatus({
-    sha,
-    state,
+    description,
     owner,
     repo,
-    description,
+    sha,
+    state,
     context: `CodePipeline (${event.detail.pipeline})`,
     target_url: `https://${
       event.region

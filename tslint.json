@@ -1,11 +1,16 @@
 {
   "extends": [
+    "tslint:latest",
     "tslint-config-airbnb",
     "tslint-immutable",
     "tslint-config-prettier",
     "tslint-plugin-prettier"
   ],
   "rules": {
+    "interface-name": false,
+    "no-console": false,
+    "no-implicit-dependencies": [true, ["aws-lambda"]],
+    "object-literal-sort-keys": [true, "shorthand-first"],
     "variable-name": [
       true,
       "ban-keywords",
