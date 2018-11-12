@@ -2,8 +2,7 @@ service:
   name: codepipeline-github-status
 
 plugins:
-  - serverless-plugin-typescript
-  - serverless-plugin-optimize
+  - serverless-webpack
 
 provider:
   name: aws

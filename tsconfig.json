@@ -3,7 +3,7 @@
     "target": "ES2017",
     "lib": ["es6", "esnext.asynciterable"],
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "esnext",
     "strict": true,
     "allowJs": true,
     "noFallthroughCasesInSwitch": true,
