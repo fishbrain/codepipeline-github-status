@@ -4,6 +4,8 @@ import * as AWS from 'aws-sdk';
 import { CodePipelineEvent } from './codepipeline';
 import { fetchParameters, getParameter } from './ssm';
 
+const JSON_INDENT = 2;
+
 export const handler: Handler = async (
   event: CodePipelineEvent,
   _context: Context,
@@ -35,7 +37,7 @@ export const handler: Handler = async (
   if (execution.pipelineExecution == null) {
     console.log(
       'Failed to fetch pipeline execution',
-      JSON.stringify(execution, null, 2),
+      JSON.stringify(execution, null, JSON_INDENT),
     );
     return;
   }
@@ -52,7 +54,7 @@ export const handler: Handler = async (
   if (sha == null) {
     console.log(
       'No revisionId found in pipeline execution',
-      JSON.stringify(execution, null, 2),
+      JSON.stringify(execution, null, JSON_INDENT),
     );
     return;
   }
@@ -62,7 +64,7 @@ export const handler: Handler = async (
   if (revisionUrl == null) {
     console.log(
       'No revisionUrl found in pipeline execution',
-      JSON.stringify(execution, null, 2),
+      JSON.stringify(execution, null, JSON_INDENT),
     );
     return;
   }
@@ -74,8 +76,7 @@ export const handler: Handler = async (
     console.log(`Not a GitHub revisionUrl: ${revisionUrl}`);
     return;
   }
-  const owner = matches[1];
-  const repo = matches[2];
+  const [owner, repo] = matches;
 
   const state = ((
     pipelineExecution: AWS.CodePipeline.PipelineExecution,
