@@ -12,7 +12,7 @@
     "deploy": "serverless deploy"
   },
   "dependencies": {
-    "@octokit/rest": "^16.21.0",
+    "@octokit/rest": "^16.21.1",
     "aws-sdk": "^2.430.0"
   },
   "devDependencies": {
