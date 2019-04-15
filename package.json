@@ -28,7 +28,7 @@
     "tslint": "^5.15.0",
     "tslint-config-fishbrain": "^4.1.0",
     "typescript": "^3.4.3",
-    "webpack": "^4.29.6"
+    "webpack": "^4.30.0"
   },
   "prettier": {
     "singleQuote": true,
