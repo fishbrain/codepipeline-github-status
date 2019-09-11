@@ -24,7 +24,7 @@
     "serverless": "^1.51.0",
     "serverless-webpack": "^5.3.1",
     "ts-jest": "^24.0.2",
-    "ts-loader": "^6.0.4",
+    "ts-loader": "^6.1.0",
     "tslint": "^5.20.0",
     "tslint-config-fishbrain": "^4.1.0",
     "typescript": "^3.6.3",
