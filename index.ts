@@ -112,6 +112,6 @@ export const handler: Handler = async (
     sha,
     state,
     context: `CodePipeline (${event.detail.pipeline})`,
-    target_url: `https://${event.region}.console.aws.amazon.com/codepipeline/home?region=${event.region}#/view/${event.detail.pipeline}/history`,
+    target_url: `https://${event.region}.console.aws.amazon.com/codesuite/codepipeline/pipelines/${event.detail.pipeline}/executions/${event.detail['execution-id']}/visualization?region=${event.region}`,
   });
 };
