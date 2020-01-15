@@ -16,12 +16,14 @@ export const getParameter = (
 
 export const fetchParameters = async (): Promise<AWS.SSM.Parameter[]> => {
   const ssm = new AWS.SSM();
-  const parameters = (await ssm
-    .getParametersByPath({
-      Path: `/codepipeline-github-status`,
-      WithDecryption: true,
-    })
-    .promise()).Parameters;
+  const parameters = (
+    await ssm
+      .getParametersByPath({
+        Path: `/codepipeline-github-status`,
+        WithDecryption: true,
+      })
+      .promise()
+  ).Parameters;
 
   if (parameters === undefined) {
     throw new Error('Could not fetch parameters');

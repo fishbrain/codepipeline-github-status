@@ -2,7 +2,11 @@ service:
   name: codepipeline-github-status
 
 plugins:
-  - serverless-webpack
+  - serverless-scriptable-plugin
+
+custom:
+  scriptHooks:
+    before:package:createDeploymentArtifacts: npm run build
 
 provider:
   name: aws
@@ -28,7 +32,7 @@ provider:
 
 functions:
   main:
-    handler: index.handler
+    handler: dist/index.handler
     reservedConcurrency: 1
     events:
       - cloudwatchEvent:

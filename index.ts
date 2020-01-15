@@ -1,6 +1,7 @@
 import * as Octokit from '@octokit/rest';
 import { Callback, Context, Handler } from 'aws-lambda';
 import * as AWS from 'aws-sdk';
+
 import { CodePipelineEvent } from './codepipeline';
 import { fetchParameters, getParameter } from './ssm';
 
@@ -59,8 +60,7 @@ export const handler: Handler = async (
     return;
   }
 
-  const revisionUrl =
-    execution.pipelineExecution.artifactRevisions[0].revisionUrl;
+  const { revisionUrl } = execution.pipelineExecution.artifactRevisions[0];
   if (revisionUrl == null) {
     console.log(
       'No revisionUrl found in pipeline execution',
@@ -70,7 +70,7 @@ export const handler: Handler = async (
   }
 
   const matches = revisionUrl.match(
-    /^https:\/\/github\.com\/([^\/]+)\/([^\/]+).*/,
+    /^https:\/\/github\.com\/([^/]+)\/([^/]+).*/,
   );
   if (matches == null) {
     console.log(`Not a GitHub revisionUrl: ${revisionUrl}`);
@@ -96,14 +96,12 @@ export const handler: Handler = async (
   const description = ((): string => {
     switch (event['detail-type']) {
       case 'CodePipeline Pipeline Execution State Change':
-        return `${execution.pipelineExecution.status}: Execution ${
-          event.detail['execution-id']
-        }`;
+        return `${execution.pipelineExecution.status}: Execution ${event.detail['execution-id']}`;
       case 'CodePipeline Action Execution State Change':
       case 'CodePipeline Stage Execution State Change':
-        return `${execution.pipelineExecution.status} (${
-          event.detail.stage
-        }): Execution ${event.detail['execution-id']}`;
+        return `${execution.pipelineExecution.status} (${event.detail.stage}): Execution ${event.detail['execution-id']}`;
+      default:
+        throw new Error('Unknown event type');
     }
   })();
 
@@ -114,10 +112,6 @@ export const handler: Handler = async (
     sha,
     state,
     context: `CodePipeline (${event.detail.pipeline})`,
-    target_url: `https://${
-      event.region
-    }.console.aws.amazon.com/codepipeline/home?region=${event.region}#/view/${
-      event.detail.pipeline
-    }/history`,
+    target_url: `https://${event.region}.console.aws.amazon.com/codepipeline/home?region=${event.region}#/view/${event.detail.pipeline}/history`,
   });
 };

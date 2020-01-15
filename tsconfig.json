@@ -5,11 +5,10 @@
     "moduleResolution": "node",
     "module": "esnext",
     "strict": true,
-    "allowJs": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
-  },
-  "exclude": ["webpack.config.js"]
+    "noUnusedParameters": true,
+    "outDir": "dist"
+  }
 }
