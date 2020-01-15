@@ -8,6 +8,11 @@ custom:
   scriptHooks:
     before:package:createDeploymentArtifacts: npm run build
 
+package:
+  individually: true
+  exclude:
+    - node_modules/aws-sdk/**
+
 provider:
   name: aws
   memorySize: 128
