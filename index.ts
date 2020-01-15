@@ -13,7 +13,6 @@ export const handler: Handler = async (
   _callback: Callback | undefined,
 ) => {
   const parameters = await fetchParameters();
-  const octokit = new Octokit();
 
   const githubToken = getParameter(parameters, 'github_token');
 
@@ -22,10 +21,7 @@ export const handler: Handler = async (
     return;
   }
 
-  octokit.authenticate({
-    token: githubToken,
-    type: 'token',
-  });
+  const octokit = new Octokit({ auth: githubToken });
 
   const codePipeline = new AWS.CodePipeline();
   const execution = await codePipeline
@@ -76,7 +72,8 @@ export const handler: Handler = async (
     console.log(`Not a GitHub revisionUrl: ${revisionUrl}`);
     return;
   }
-  const [owner, repo] = matches;
+  const owner = matches[1];
+  const repo = matches[2];
 
   const state = ((
     pipelineExecution: AWS.CodePipeline.PipelineExecution,
