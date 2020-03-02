@@ -29,7 +29,7 @@
     "serverless-scriptable-plugin": "^1.0.5",
     "ts-jest": "^25.2.1",
     "ts-loader": "^6.2.1",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.3"
   },
   "prettier": {
     "singleQuote": true,
