@@ -13,7 +13,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@octokit/rest": "^16.42.2",
+    "@octokit/rest": "^17.1.1",
     "aws-sdk": "^2.644.0"
   },
   "devDependencies": {
