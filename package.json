@@ -25,7 +25,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.2.7",
     "prettier": "^1.19.1",
-    "serverless": "^1.67.1",
+    "serverless": "^1.67.2",
     "serverless-scriptable-plugin": "^1.0.5",
     "ts-jest": "^25.3.1",
     "ts-loader": "^6.2.2",
