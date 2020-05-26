@@ -28,7 +28,7 @@
     "serverless": "^1.71.1",
     "serverless-scriptable-plugin": "^1.0.5",
     "ts-jest": "^25.5.1",
-    "ts-loader": "^7.0.4",
+    "ts-loader": "^7.0.5",
     "typescript": "^3.9.3"
   },
   "prettier": {
