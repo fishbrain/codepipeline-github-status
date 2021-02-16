@@ -50,10 +50,7 @@ export const handler: Handler = async (
 
   const sha = execution.pipelineExecution.artifactRevisions[0].revisionId;
   if (sha == null) {
-    console.log(
-      'No revisionId found in pipeline execution',
-      JSON.stringify(execution, null, JSON_INDENT),
-    );
+    console.log('No revisionId found in pipeline execution');
     return;
   }
 
@@ -66,9 +63,11 @@ export const handler: Handler = async (
     return;
   }
 
-  const matches = revisionUrl.match(
-    /^https:\/\/github\.com\/([^/]+)\/([^/]+).*/,
-  );
+  const matches =
+    revisionUrl.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+).*/) ||
+    revisionUrl.match(
+      /^https:\/\/.*\.console\.aws\.amazon\.com\/.*FullRepositoryId=([^/]+)\/([^&]+).*/,
+    );
   if (matches == null) {
     console.log(`Not a GitHub revisionUrl: ${revisionUrl}`);
     return;
