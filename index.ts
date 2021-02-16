@@ -1,4 +1,4 @@
-import * as Octokit from '@octokit/rest';
+import { Octokit } from '@octokit/rest';
 import { Callback, Context, Handler } from 'aws-lambda';
 import * as AWS from 'aws-sdk';
 
@@ -102,7 +102,7 @@ export const handler: Handler = async (
     }
   })();
 
-  await octokit.repos.createStatus({
+  await octokit.repos.createCommitStatus({
     description,
     owner,
     repo,
