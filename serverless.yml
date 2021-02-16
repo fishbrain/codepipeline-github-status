@@ -16,6 +16,7 @@ provider:
   name: aws
   memorySize: 128
   runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
   region: eu-west-1
   iamRoleStatements:
     - Effect: Allow
