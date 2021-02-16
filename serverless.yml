@@ -1,5 +1,4 @@
-service:
-  name: codepipeline-github-status
+service: codepipeline-github-status
 
 plugins:
   - serverless-scriptable-plugin
