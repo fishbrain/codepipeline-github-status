@@ -6,7 +6,7 @@ export const getParameter = (
   name: string,
 ): string | undefined => {
   const val = parameters.find(
-    p => p.Name !== undefined && p.Name.endsWith(`/${name}`),
+    (p) => p.Name !== undefined && p.Name.endsWith(`/${name}`),
   );
   if (val && val.Value) {
     return val.Value;
