@@ -16,7 +16,7 @@ package:
 provider:
   name: aws
   memorySize: 128
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: eu-west-1
   iamRoleStatements:
     - Effect: Allow
