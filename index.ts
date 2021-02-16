@@ -44,6 +44,7 @@ export const handler: Handler = async (
     execution.pipelineExecution.artifactRevisions.length === 0
   ) {
     console.log('No revision info found in pipeline execution');
+    console.log(JSON.stringify(execution, null, JSON_INDENT));
     return;
   }
 
