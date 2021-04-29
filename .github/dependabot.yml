@@ -1,0 +1,65 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.22
+    - 14.14.24
+    - 14.14.25
+    - 14.14.26
+    - 15.0.0
+  - dependency-name: aws-sdk
+    versions:
+    - 2.833.0
+    - 2.834.0
+    - 2.835.0
+    - 2.836.0
+    - 2.838.0
+    - 2.839.0
+    - 2.840.0
+    - 2.841.0
+    - 2.842.0
+    - 2.843.0
+    - 2.844.0
+    - 2.871.0
+    - 2.890.0
+  - dependency-name: "@octokit/rest"
+    versions:
+    - 18.3.0
+  - dependency-name: typescript
+    versions:
+    - 3.9.7
+    - 3.9.8
+    - 3.9.9
+  - dependency-name: serverless
+    versions:
+    - 2.21.1
+    - 2.22.0
+  - dependency-name: eslint
+    versions:
+    - 7.18.0
+    - 7.19.0
+  - dependency-name: "@types/aws-lambda"
+    versions:
+    - 8.10.71
+  - dependency-name: ini
+    versions:
+    - 1.3.8
+  - dependency-name: ts-loader
+    versions:
+    - 8.0.10
+  - dependency-name: bl
+    versions:
+    - 1.2.3
+  - dependency-name: dot-prop
+    versions:
+    - 4.2.1
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
