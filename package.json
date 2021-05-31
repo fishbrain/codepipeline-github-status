@@ -23,7 +23,7 @@
     "eslint": "^7.27.0",
     "eslint-config-fishbrain-base": "^2.1.1",
     "eslint-plugin-prettier": "^3.4.0",
-    "jest": "^27.0.1",
+    "jest": "^27.0.3",
     "prettier": "^2.3.0",
     "serverless": "^2.43.1",
     "serverless-scriptable-plugin": "^1.2.1",
