@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.6.8",
-    "aws-sdk": "^2.950.0"
+    "aws-sdk": "^2.951.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.79",
