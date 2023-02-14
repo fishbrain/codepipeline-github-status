@@ -9,7 +9,8 @@
   "scripts": {
     "test": "eslint --ext ts,js . && npx sls package",
     "lint": "eslint --ext ts,js .",
-    "deploy": "serverless deploy",
+    "deploy:staging": "serverless deploy --stage staging",
+    "deploy:production": "serverless deploy --stage production",
     "build": "tsc"
   },
   "dependencies": {
@@ -26,6 +27,8 @@
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "serverless": "^3.26.0",
+    "serverless-plugin-datadog": "^5.17.0",
+    "serverless-plugin-resource-tagging": "^1.2.0",
     "serverless-scriptable-plugin": "^1.2.2",
     "ts-jest": "^27.0.4",
     "ts-loader": "^9.2.4",
