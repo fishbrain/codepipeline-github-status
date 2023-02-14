@@ -1,0 +1,94 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          check-latest: true
+
+      - name: Cache node modules
+        uses: actions/cache@v3.2.4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install packages
+        run: npm ci
+
+  deploy-staging:
+    needs: install
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+    env:
+      AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          check-latest: true
+
+      - name: Cache node modules
+        uses: actions/cache@v3.2.4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy staging
+        run: npm run deploy:staging
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    env:
+      AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          check-latest: true
+
+      - name: Cache node modules
+        uses: actions/cache@v3.2.4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy production
+        run: npm run deploy:production
