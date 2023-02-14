@@ -2,10 +2,14 @@ service: codepipeline-github-status
 
 plugins:
   - serverless-scriptable-plugin
+  - serverless-plugin-datadog
+  - serverless-plugin-resource-tagging
 
 custom:
   scriptHooks:
     before:package:createDeploymentArtifacts: npm run build
+  datadog:
+    apiKey: ${ssm:/accounts-${opt:stage, self:provider.stage}/datadog_api_key}
 
 package:
   individually: true
@@ -34,6 +38,9 @@ provider:
         - 'codepipeline:GetPipelineExecution'
       Resource:
         - arn:aws:codepipeline:${self:provider.region}:*:*
+  stackTags:
+    environment: ${opt:stage, self:provider.stage}
+    repository: "https://github.com/fishbrain/codepipeline-github-status"
 
 functions:
   main:
