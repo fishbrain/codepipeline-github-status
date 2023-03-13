@@ -41,6 +41,9 @@ provider:
   stackTags:
     environment: ${opt:stage, self:provider.stage}
     repository: "https://github.com/fishbrain/codepipeline-github-status"
+    FibEnvironment: ${opt:stage, self:provider.stage}
+    FibOwner: "platform-team"
+    FibService: "codepipeline-github-status"
 
 functions:
   main:
