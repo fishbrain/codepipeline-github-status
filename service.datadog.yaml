@@ -1,12 +1,14 @@
-schema-version: v2
+schema-version: v2.1
 dd-service: codepipeline-github-status
-team: Platform
+team: platform-team
+lifecycle: internal
 contacts:
   - name: "#platform"
     type: slack
     contact: https://fishbrain.slack.com/archives/CE0ETBKCY
-repos:
+links:
   - name: codepipeline-github-status
+    type: repo
     provider: github
     url: https://github.com/fishbrain/codepipeline-github-status
 
