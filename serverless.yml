@@ -40,6 +40,8 @@ provider:
         - arn:aws:codepipeline:${self:provider.region}:*:*
   stackTags:
     environment: ${opt:stage, self:provider.stage}
+    env: ${opt:stage, self:provider.stage}
+    service: "codepipeline-github-status"
     repository: "https://github.com/fishbrain/codepipeline-github-status"
     FibEnvironment: ${opt:stage, self:provider.stage}
     FibOwner: "platform-team"
